@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang = "es">
+
+    <head>   
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Encriptador Sam's</title>
+        <link rel="stylesheet" href="reset.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap" rel="stylesheet">
+    </head> 
+
+    <body>
+
+        <header>
+            <div class="headerdiv">
+                <img class="logo" src="favicon.png">
+            </div>
+        </header>
+
+        <main>
+  
+            <!-------------------------------- Bloque principal -------------------------------->
+            <div class="inputs">
+                <!--------------------------- Input de ingresar texto --------------------------->
+                <textarea id="ingresar" class="ingtext" type="text" placeholder="Ingrese el texto aqui"></textarea>
+
+                <!-------------------------------- Input debajo -------------------------------->
+                <textarea id="debajo" class="textdec" type="text" readonly></textarea> 
+
+                <!---------------------- Input de mostrar texto encriptado ---------------------->
+                <textarea id="adios" class="textdec" type="text" readonly></textarea>
+                
+            </div>        
+
+            <!------------------------------ Bloque de partes flotantes ------------------------------>
+            <section class="flotantes">
+
+                <div id="encima" class="movimiento">
+
+                    <img class="vacio" id="vacio" src="empty.gif">
+                
+                    <p class="m1">¡Oh no!</p> 
+
+                    <div class="m2">   
+                        <p>Ningún mensaje fue</p>
+                        <p>encontrado</p>
+                    </div>  
+
+                    <div class="m3">
+                        <p>Ingresa el texto que deseas encriptar</p>
+                        <p>o desencriptar</p>
+                    </div>
+                </div>
+
+                <p class="info">&#9888 Solo letras minusculas y sin acento</p>
+                
+                <div class="botones">
+                    <input type="submit" id="boton1" class="botenc" value="Encriptar">
+                    <input type="submit" id="boton2" class="botdes" value="Desencriptar">
+                    <input type="submit" id="boton3" class="botcop" value="Copiar">
+                </div>
+
+                <!----------------------------------- notificaciones ----------------------------------->
+                <div>
+                  <span id="noti" class="msgnoti">Ingrese un texto para encriptar o desencriptar</span> 
+                  <span id="copiado" class="msgnoti">¡Texto copiado al portapapeles!</span> 
+                </div>
+            </section>  
+        </main>
+
+        <footer>
+            <div class="footerdiv">
+                <img class="pie" src="footer.gif">
+                <p>Página creada por Nery Samayoa</p>
+            </div>
+        </footer>
+
+        <!------------------------------ Libreria Jquery para animaciones ------------------------------>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+        <!----------------------- Script del focus y select para ingresar texto ----------------------->
+        <script>
+            var pantalla = document.querySelector(".ingtext")
+            pantalla.focus();
+
+            var pantalla2 = document.querySelector(".ingtext").select;
+            
+            pantalla.onclick = pantalla2;
+        </script> 
+        
+        <!---------------------- Script para encriptar y desencriptar/animaciones ---------------------->
+        <script>
+            var press1 = document.getElementById("boton1")
+            var press2 = document.getElementById("boton2")
+            var enviar = document.getElementById("ingresar");
+            var recibir = document.getElementById("debajo");
+
+            function funcif() {
+                var texto = document.getElementById("ingresar");
+
+                if(texto.value=="") {
+
+                    $("#noti").slideDown();
+                    $("#encima").fadeIn();
+                    $("#adios").fadeIn();
+                    $("#debajo").fadeOut(2000);
+                    $("#boton3").slideUp();
+
+                    function time() {
+                        $("#noti").slideUp();
+                    }
+                    setTimeout(time,4000)
+
+                }
+
+                else {
+
+                    function cambio() {
+
+                        $("#encima").fadeOut();
+                        $("#adios").fadeOut();
+                        $("#debajo").fadeIn();
+                        $("#boton3").slideDown();
+                        
+                    }
+
+                    cambio();
+
+                }
+
+            }
+
+            function cifrando( ) {
+
+                var remplazarCif = document.getElementById("ingresar").value;
+
+                var cifrar = remplazarCif.replace(/e/gi, "enter").replace(/i/gi, "imes").replace(/a/gi, "ai").replace(/o/gi, "ober").replace(/u/gi, "ufat");
+
+                var texto = document.getElementById("ingresar");   
+
+                recibir.value = cifrar;
+
+            }
+
+            function descifrando( ) {
+
+                var remplazar = document.getElementById("ingresar").value;
+
+                var descifrar = remplazar.replace(/enter/gi, "e").replace(/imes/gi, "i").replace(/ai/gi, "a").replace(/ober/gi, "o").replace(/ufat/gi, "u");
+
+                recibir.value = descifrar;
+
+            }
+
+            function encriptando() {
+                funcif();
+                cifrando();          
+            }
+
+            function desencriptando() {
+                funcif();
+                descifrando();
+            }
+
+            press1.onclick = encriptando;
+            press2.onclick = desencriptando; 
+        </script> 
+
+        <!------------------------------------- Script para copiar ------------------------------------->
+        <script>
+            var press3 = document.getElementById("boton3");
+
+            function secopio() {
+                $("#copiado").slideUp();
+            }
+
+            function copiar(){
+                var copiarTexto = document.getElementById("debajo");
+
+                copiarTexto.select();
+                copiarTexto.setSelectionRange(0, 99999);
+
+                navigator.clipboard.writeText(copiarTexto.value);
+
+                $("#copiado").slideDown();
+                setTimeout(secopio,4000)
+
+            }
+
+            press3.onclick = copiar;
+        </script>
+         
+    </body>    
+
+</html>
