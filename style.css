@@ -209,6 +209,8 @@ main {
 
 .botcop:active {
     background-color: #93ef87;
+    color: black;
+    border-color: black;
     transition: 100ms;
 }
 
